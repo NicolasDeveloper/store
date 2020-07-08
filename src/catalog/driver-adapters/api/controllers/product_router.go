@@ -3,9 +3,9 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/NicolasDeveloper/store/src/catalog/infrastructure/dbcontext"
+	"github.com/NicolasDeveloper/store/src/catalog/dbcontext"
 
-	"github.com/NicolasDeveloper/store/src/catalog/presentation/api/common"
+	"github.com/NicolasDeveloper/store/src/catalog/api/common"
 )
 
 //ProductRouter handle device resources

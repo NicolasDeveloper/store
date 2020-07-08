@@ -5,7 +5,7 @@ import (
 
 	"github.com/NicolasDeveloper/store/src/catalog/core/entities"
 	"github.com/NicolasDeveloper/store/src/catalog/core/ports"
-	"github.com/NicolasDeveloper/store/src/catalog/infrastructure/dbcontext"
+	"github.com/NicolasDeveloper/store/src/catalog/dbcontext"
 )
 
 type productsRepositoryAdapter struct {
