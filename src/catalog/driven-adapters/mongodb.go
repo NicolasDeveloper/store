@@ -1,4 +1,4 @@
-package dbcontext
+package drivenadapters
 
 import (
 	"context"
@@ -18,8 +18,8 @@ type DbContext struct {
 }
 
 //NewContext database context
-func NewContext() DbContext {
-	return DbContext{}
+func NewContext() *DbContext {
+	return &DbContext{}
 }
 
 //Connect method to connect in database

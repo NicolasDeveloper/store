@@ -11,12 +11,14 @@ type SearchProductsByRangeQuery struct {
 }
 
 //NewSearchProductsByRangeQuery query
-func NewSearchProductsByRangeQuery() (SearchProductsByRangeQuery, error) {
-	return SearchProductsByRangeQuery{}, nil
+func NewSearchProductsByRangeQuery(query ports.IProductQueryPort) (SearchProductsByRangeQuery, error) {
+	return SearchProductsByRangeQuery{
+		query: query,
+	}, nil
 }
 
 //Execute query
-func (q *SearchProductsByRangeQuery) Execute(dto dtos.FilterProducts) ([]dtos.ProductDTO, error) {
+func (s *SearchProductsByRangeQuery) Execute(dto dtos.FilterProducts) ([]dtos.ProductDTO, error) {
 	// products, error := q.query.Search(dto.Skip, dto.Take, dto.Filter)
 
 	return nil, nil

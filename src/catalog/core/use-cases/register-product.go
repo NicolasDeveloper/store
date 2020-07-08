@@ -19,7 +19,7 @@ func NewRegisterUseCase(repository ports.IProductRepositoryPort) *RegisterUseCas
 }
 
 //Execute execute use case
-func (u *RegisterUseCase) Execute(productDTO dtos.ProductDTO) error {
+func (u *RegisterUseCase) Execute(productDTO *dtos.ProductDTO) error {
 	entity, error := entities.NewProduct(
 		productDTO.Name,
 		productDTO.Price,
@@ -27,6 +27,8 @@ func (u *RegisterUseCase) Execute(productDTO dtos.ProductDTO) error {
 	)
 
 	u.repository.Save(entity)
+
+	productDTO.ID = entity.ID
 
 	return error
 }

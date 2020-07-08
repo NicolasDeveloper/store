@@ -4,17 +4,23 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/NicolasDeveloper/store/src/catalog/presentation/api/controllers"
+	"github.com/golobby/container"
 
-	"github.com/NicolasDeveloper/store/src/catalog/infrastructure/dbcontext"
-	"github.com/NicolasDeveloper/store/src/catalog/presentation/api/common"
+	"go.uber.org/dig"
+
+	"github.com/NicolasDeveloper/store/src/catalog/ioc"
+
+	adapters "github.com/NicolasDeveloper/store/src/catalog/driven-adapters"
+	"github.com/NicolasDeveloper/store/src/catalog/driver-adapters/api/controllers"
+
+	"github.com/NicolasDeveloper/store/src/catalog/driver-adapters/api/common"
 	"github.com/gorilla/mux"
 )
 
 //App initialize app
 type App struct {
-	router *mux.Router
-	dbctx  dbcontext.DbContext
+	router    *mux.Router
+	container *dig.Container
 }
 
 //NewApp contructor
@@ -24,8 +30,15 @@ func NewApp() *App {
 
 //Initialize configure app
 func (a *App) Initialize() *App {
-	a.dbctx = dbcontext.NewContext()
-	a.dbctx.Connect()
+	ioc.NewContainerIOC().RegisterDependencies()
+	return a
+}
+
+//StartupDatabase connect to database
+func (a *App) StartupDatabase() *App {
+	var dbcontext *adapters.DbContext
+	container.Make(&dbcontext)
+	dbcontext.Connect()
 	return a
 }
 
@@ -34,7 +47,7 @@ func (a *App) ConfigEndpoints() *App {
 	a.router = mux.NewRouter()
 	s := a.router.PathPrefix("/catalog-api/v1/").Subrouter()
 
-	for _, b := range initBundles(a) {
+	for _, b := range initBundles() {
 		for _, route := range b.GetRoutes() {
 			s.HandleFunc(route.Path, route.Handler).Methods(route.Method)
 		}
@@ -50,8 +63,8 @@ func (a *App) Run(port string) *App {
 	return a
 }
 
-func initBundles(app *App) []common.Bundle {
+func initBundles() []common.Bundle {
 	return []common.Bundle{
-		controllers.NewProductRouter(app.dbctx),
+		controllers.NewProductRouter(),
 	}
 }

@@ -5,16 +5,15 @@ import (
 
 	"github.com/NicolasDeveloper/store/src/catalog/core/entities"
 	"github.com/NicolasDeveloper/store/src/catalog/core/ports"
-	"github.com/NicolasDeveloper/store/src/catalog/dbcontext"
 )
 
 type productsRepositoryAdapter struct {
-	ctx dbcontext.DbContext
+	ctx *DbContext
 	ports.IProductRepositoryPort
 }
 
 //NewProductsRepositoryAdapter constructor
-func NewProductsRepositoryAdapter(ctx dbcontext.DbContext) (ports.IProductRepositoryPort, error) {
+func NewProductsRepositoryAdapter(ctx *DbContext) (ports.IProductRepositoryPort, error) {
 	return &productsRepositoryAdapter{
 		ctx: ctx,
 	}, nil

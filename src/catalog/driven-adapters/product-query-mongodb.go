@@ -7,16 +7,15 @@ import (
 
 	"github.com/NicolasDeveloper/store/src/catalog/core/entities"
 	"github.com/NicolasDeveloper/store/src/catalog/core/ports"
-	"github.com/NicolasDeveloper/store/src/catalog/dbcontext"
 )
 
 type productQuery struct {
-	ctx dbcontext.DbContext
+	ctx *DbContext
 	ports.IProductQueryPort
 }
 
 //NewProductQuery constructor
-func NewProductQuery(ctx dbcontext.DbContext) (ports.IProductQueryPort, error) {
+func NewProductQuery(ctx *DbContext) (ports.IProductQueryPort, error) {
 	return &productQuery{
 		ctx: ctx,
 	}, nil

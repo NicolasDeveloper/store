@@ -3,9 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/NicolasDeveloper/store/src/catalog/dbcontext"
-
-	"github.com/NicolasDeveloper/store/src/catalog/api/common"
+	"github.com/NicolasDeveloper/store/src/catalog/driver-adapters/api/common"
 )
 
 //ProductRouter handle device resources
@@ -14,8 +12,8 @@ type ProductRouter struct {
 }
 
 //NewProductRouter list of routes
-func NewProductRouter(ctx dbcontext.DbContext) common.Bundle {
-	ctrl := NewProductController(ctx)
+func NewProductRouter() common.Bundle {
+	ctrl := NewProductController()
 
 	r := []common.Route{
 		{
