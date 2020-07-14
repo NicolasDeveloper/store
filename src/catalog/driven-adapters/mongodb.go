@@ -24,7 +24,6 @@ func NewContext() *DbContext {
 
 //Connect method to connect in database
 func (ctx *DbContext) Connect() error {
-
 	connectionString := os.Getenv("MONGO_CONNECTION_STRING")
 
 	if connectionString == "" {
