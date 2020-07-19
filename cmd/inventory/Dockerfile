@@ -1,14 +1,23 @@
- 
-FROM golang:1.12.0-alpine3.9
-
-RUN apk update && apk add git && go get gopkg.in/natefinch/lumberjack.v2
-
-RUN mkdir /app
-
-ADD . /app
+FROM golang:latest
 
 WORKDIR /app
 
-RUN go build -o main .
+ARG LOG_DIR=/app/logs
 
-CMD ["/cmd/catalog/main"]
+RUN mkdir -p ${LOG_DIR}
+
+ENV LOG_FILE_LOCATION=${LOG_DIR}/app.log 
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY . .
+
+RUN go build -o inventory /app/cmd/inventory
+
+EXPOSE 3201
+
+VOLUME [${LOG_DIR}]
+
+CMD ["./inventory"]

@@ -22,6 +22,6 @@ func NewProductsRepositoryAdapter(ctx *DbContext) (ports.IProductRepositoryPort,
 //Save search products in database
 func (r *productsRepositoryAdapter) Save(product entities.Product) error {
 	collection, error := r.ctx.GetCollection(product)
-	collection.InsertOne(context.TODO(), product)
+	_, error = collection.InsertOne(context.TODO(), product)
 	return error
 }
